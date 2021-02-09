@@ -118,5 +118,6 @@ func set_player_name(new_name):
 	get_node("label").set_text(new_name)
 
 func _ready():
+	$dash_count.set_count(3)
 	stunned = false
 	puppet_pos = position

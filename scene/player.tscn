@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/player.gd" type="Script" id=2]
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=3]
+[ext_resource path="res://scene/add/dash_count.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.91374, 6.53276 )
@@ -131,11 +132,19 @@ tracks/0/keys = {
 "values": [ 0, 0, 0, 0 ]
 }
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.47451, 0.47451, 0.47451, 0.623529 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 0.552941, 0.2, 1 )
+
+[sub_resource type="DynamicFont" id=9]
 size = 14
 font_data = ExtResource( 1 )
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=10]
 radius = 32.0
 
 [node name="player" type="KinematicBody2D"]
@@ -157,6 +166,25 @@ anims/walk_left = SubResource( 5 )
 anims/walk_right = SubResource( 6 )
 anims/walk_up = SubResource( 7 )
 
+[node name="dash_count" type="Panel" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 8 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="counts" type="HBoxContainer" parent="dash_count"]
+margin_left = 2.0
+margin_top = 2.0
+custom_constants/separation = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="dash_count"]
+
 [node name="label" type="Label" parent="."]
 margin_left = -82.0
 margin_top = -35.0
@@ -164,11 +192,14 @@ margin_right = 85.0
 margin_bottom = -14.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Player 1"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="collect_range" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
-shape = SubResource( 9 )
+shape = SubResource( 10 )
