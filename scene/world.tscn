@@ -40,8 +40,9 @@ position = Vector2( 296, 24 )
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Score" type="HBoxContainer" parent="."]
+margin_top = 208.0
 margin_right = 320.0
-margin_bottom = 40.0
+margin_bottom = 240.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 script = ExtResource( 3 )

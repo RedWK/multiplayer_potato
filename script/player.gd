@@ -70,8 +70,8 @@ func _physics_process(_delta):
 
 		#prev_bombing = bombing
 
-			rset("puppet_motion", motion)
-			rset("puppet_pos", position)
+		rset("puppet_motion", motion)
+		rset("puppet_pos", position)
 	else:
 		position = puppet_pos
 		motion = puppet_motion
@@ -94,7 +94,7 @@ func _physics_process(_delta):
 		get_node("anim").play(current_anim)
 
 	# FIXME: Use move_and_slide
-	if dashing:
+	if dashing and is_network_master():
 		var dash = get_direction_from_input()
 		move_and_slide(dash)
 		#print(dash * MOTION_SPEED)
