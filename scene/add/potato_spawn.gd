@@ -1,6 +1,6 @@
 extends Area2D
 
-
+#var potato_index = 0
 var vel = Vector2.ZERO
 onready var tween = $Tween
 
@@ -10,6 +10,8 @@ sync func potato_boom():
 	for i in potato_max:
 		var potato = preload("res://scene/add/potato.tscn").instance()
 		get_parent().call_deferred("add_child", potato)
+		potato.set_name("potato" + str(gamestate.potato_index))
+		gamestate.potato_index += 1
 		var pos = position + Vector2(rand_range(-32, 32), rand_range(-32, 32))
 		potato.position = position
 		tween.interpolate_property(potato, "position",

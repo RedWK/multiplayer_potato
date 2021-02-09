@@ -10,7 +10,6 @@ sync func setup_potato(potato_name, pos):
 	get_parent().get_node("Rocks").add_child(potato)
 
 sync func _on_Timer_timeout():
-
 	var limit_up = get_parent().get_node("limit_up")
 	var limit_down = get_parent().get_node("limit_down")
 	var x = rand_range(limit_up.position.x, limit_down.position.x)
