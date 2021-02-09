@@ -13,7 +13,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-self_modulate = Color( 1, 1, 1, 0.356863 )
+self_modulate = Color( 1, 1, 1, 0.333333 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 16, 32, 16, 16 )
