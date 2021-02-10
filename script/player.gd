@@ -7,6 +7,8 @@ export var player_color = Color.white
 var dash_speed = 350
 var dashing = false
 var dash_time = 0.8
+var dash_max = 3
+var dash_count = dash_max
 
 puppet var puppet_pos = Vector2()
 puppet var puppet_motion = Vector2()
@@ -37,7 +39,10 @@ func get_direction_from_input():
 
 
 func _input(event):
-	if event.is_action_pressed("ui_accept") and !dashing:
+	if event.is_action_pressed("ui_accept") \
+		and !dashing and dash_count > 0:
+		$dash_count.remove_count(1)
+		dash_count -= 1
 		dashing = true
 		dash_time = 0.2
 

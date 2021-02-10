@@ -3,7 +3,7 @@
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/player.gd" type="Script" id=2]
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=3]
-[ext_resource path="res://scene/add/dash_count.gd" type="Script" id=4]
+[ext_resource path="res://scene/add/gd/dash_count.gd" type="Script" id=4]
 [ext_resource path="res://script/outline.shader" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -154,6 +154,7 @@ shader_param/outline_color = Color( 1, 1, 1, 1 )
 radius = 32.0
 
 [node name="player" type="KinematicBody2D"]
+z_index = 2
 script = ExtResource( 2 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
@@ -205,7 +206,6 @@ __meta__ = {
 [node name="outline" type="Sprite" parent="."]
 material = SubResource( 10 )
 position = Vector2( -7.15256e-07, -7.15256e-07 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 16, 64, 16, 16 )
