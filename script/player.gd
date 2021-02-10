@@ -10,8 +10,8 @@ var dash_time = 0.8
 var dash_max = 3
 var dash_count = dash_max
 
-puppet var puppet_pos = Vector2()
-puppet var puppet_motion = Vector2()
+var dir = Vector2.RIGHT
+
 
 
 var current_anim = ""
@@ -25,7 +25,7 @@ func get_direction_from_input():
 	# 上下
 	move_dir.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	move_dir = move_dir.clamped(1)
-	return move_dir * dash_speed#move_dir.normalized() * dash_speed#
+	return move_dir# * dash_speed#move_dir.normalized() * dash_speed#
 
 
 func _input(event):
@@ -36,6 +36,15 @@ func _input(event):
 		dash_count -= 1
 		dashing = true
 		dash_time = 0.2
+
+	if event.is_action_pressed("shoot"):
+		var bullet = load("res://scene/add/bullet.tscn").instance()
+		var input_dir = get_direction_from_input()
+		var shoot_dir = dir
+		if input_dir != Vector2.ZERO:
+			shoot_dir = input_dir
+		get_parent().add_child(bullet)
+		bullet.ready_pos(position,  shoot_dir)
 
 
 
@@ -53,8 +62,12 @@ func _physics_process(_delta):
 	
 	if !dashing:
 		if Input.is_action_pressed("move_left"):
+			$sprite.flip_h = true
+			$outline.flip_h = true
 			motion += Vector2(-1, 0)
 		if Input.is_action_pressed("move_right"):
+			$sprite.flip_h = false
+			$outline.flip_h = false
 			motion += Vector2(1, 0)
 		if Input.is_action_pressed("move_up"):
 			motion += Vector2(0, -1)
@@ -62,12 +75,16 @@ func _physics_process(_delta):
 			motion += Vector2(0, 1)
 	var new_anim = "standing"
 	if motion.y < 0:
+		dir = Vector2.UP
 		new_anim = "walk_up"
 	elif motion.y > 0:
+		dir = Vector2.DOWN
 		new_anim = "walk_down"
 	elif motion.x < 0:
+		dir = Vector2.LEFT
 		new_anim = "walk_left"
 	elif motion.x > 0:
+		dir = Vector2.RIGHT
 		new_anim = "walk_right"
 
 
@@ -77,7 +94,7 @@ func _physics_process(_delta):
 
 	if dashing:
 		var dash = get_direction_from_input()
-		move_and_slide(dash)
+		move_and_slide(dash * dash_speed)
 	else:
 		move_and_slide(motion * MOTION_SPEED)
 
@@ -91,4 +108,4 @@ func _ready():
 	for c in $dash_count/counts.get_children():
 		c.self_modulate = player_color
 		pass
-	puppet_pos = position
+#	puppet_pos = position

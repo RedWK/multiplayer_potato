@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scene/add/spawn_pos.tscn" type="PackedScene" id=2]
 [ext_resource path="res://script/score.gd" type="Script" id=3]
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=4]
 [ext_resource path="res://scene/add/spawn_item.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scene/add/Boss.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 44
@@ -28,17 +29,23 @@ __meta__ = {
 position = Vector2( 160, 200 )
 
 [node name="1" type="Position2D" parent="SpawnPoints"]
+visible = false
 position = Vector2( 296, 200 )
 
 [node name="2" type="Position2D" parent="SpawnPoints"]
+visible = false
 position = Vector2( 24, 24 )
 
 [node name="3" type="Position2D" parent="SpawnPoints"]
+visible = false
 position = Vector2( 296, 24 )
 
 [node name="Rocks" type="Node2D" parent="."]
 
 [node name="Players" type="Node2D" parent="."]
+
+[node name="Boss" parent="." instance=ExtResource( 6 )]
+position = Vector2( 160, 88 )
 
 [node name="Score" type="HBoxContainer" parent="."]
 margin_top = 208.0
