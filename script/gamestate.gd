@@ -1,6 +1,6 @@
 extends Node
 
-
+var item_index = 0
 var p_index = 0
 var potato_index = 0
 # Default game server port. Can be any number between 1024 and 49151.
