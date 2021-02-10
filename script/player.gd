@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const MOTION_SPEED = 90.0
 
+export var player_color = Color.white
 
 var dash_speed = 350
 var dashing = false
@@ -118,6 +119,13 @@ func set_player_name(new_name):
 	get_node("label").set_text(new_name)
 
 func _ready():
+	$dash_count.get_stylebox("panel", "").border_color = player_color
+	$outline.get_material().set_shader_param("outline_color", player_color)
 	$dash_count.set_count(3)
+	$label.add_color_override("font_color", player_color)
+	for c in $dash_count/counts.get_children():
+		c.self_modulate = player_color
+		pass
+	
 	stunned = false
 	puppet_pos = position

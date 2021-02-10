@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/player.gd" type="Script" id=2]
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=3]
 [ext_resource path="res://scene/add/dash_count.gd" type="Script" id=4]
+[ext_resource path="res://script/outline.shader" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.91374, 6.53276 )
@@ -13,7 +14,7 @@ resource_name = "standing"
 length = 0.8
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -29,7 +30,7 @@ tracks/0/keys = {
 resource_name = "stunned"
 length = 1.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -41,7 +42,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("sprite:rotation_degrees")
+tracks/1/path = NodePath("outline:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -69,7 +70,7 @@ tracks/2/keys = {
 length = 0.8
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -86,7 +87,7 @@ length = 0.8
 loop = true
 step = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -103,7 +104,7 @@ length = 0.8
 loop = true
 step = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -120,7 +121,7 @@ length = 0.8
 loop = true
 step = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:frame")
+tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -133,7 +134,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.47451, 0.47451, 0.47451, 0.623529 )
+bg_color = Color( 0, 0, 0, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -144,16 +145,16 @@ border_color = Color( 1, 0.552941, 0.2, 1 )
 size = 14
 font_data = ExtResource( 1 )
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 5 )
+shader_param/outline_width = 1.0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="CircleShape2D" id=11]
 radius = 32.0
 
 [node name="player" type="KinematicBody2D"]
 script = ExtResource( 2 )
-
-[node name="sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 0, 32, 16, 16 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -186,20 +187,36 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="dash_count"]
 
 [node name="label" type="Label" parent="."]
-margin_left = -82.0
-margin_top = -35.0
-margin_right = 85.0
-margin_bottom = -14.0
+margin_left = -39.8016
+margin_top = -19.4362
+margin_right = 127.198
+margin_bottom = 1.56377
+rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Player 1"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="outline" type="Sprite" parent="."]
+material = SubResource( 10 )
+position = Vector2( -7.15256e-07, -7.15256e-07 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 16, 64, 16, 16 )
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 16, 64, 16, 16 )
+
 [node name="collect_range" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
-shape = SubResource( 10 )
+shape = SubResource( 11 )

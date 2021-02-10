@@ -1,7 +1,7 @@
 extends Node
 
 
-
+var p_index = 0
 var potato_index = 0
 # Default game server port. Can be any number between 1024 and 49151.
 # Not on the list of registered or common ports as of November 2020:
@@ -170,14 +170,28 @@ func begin_game():
 
 	pre_start_game(spawn_points)
 
+#func delete_children(node):
+#	for n in node.get_children():
+#		node.remove_child(n)
+#		n.queue_free()
+#	node.queue_free()
 
 func end_game():
-	if has_node("/root/World"): # Game is in progress.
+	get_tree().quit()
+	#if has_node("/root/World"): # Game is in progress.
 		# End it
-		get_node("/root/World").queue_free()
-
-	emit_signal("game_ended")
-	players.clear()
+	#	get_node("/root/World").queue_free()
+	#	get_node("/root/Lobby").queue_free()
+	#var lobby = load("res://scene/lobby.tscn").instance()
+	#get_tree().get_root().add_child(lobby)
+	#emit_signal("game_ended")
+	#var del_potato = get_tree().get_root().get_node("World")
+	#delete_children(del_potato)
+	#players.clear()
+	
+	#peer = null
+	#p_index = 0
+	#potato_index = 0
 
 
 func _ready():
