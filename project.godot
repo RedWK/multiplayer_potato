@@ -24,6 +24,7 @@ gamestate="*res://script/gamestate.gd"
 
 [debug]
 
+settings/fps/force_fps=60
 gdscript/warnings/return_value_discarded=false
 
 [display]
