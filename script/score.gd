@@ -35,7 +35,7 @@ func add_player(id, new_player_name):
 	l.add_font_override("font", font)
 	add_child(l)
 
-	player_labels[id] = { name = new_player_name, label = l, score = 0}
+	player_labels[id] = { name = new_player_name, label = l, score = 0, dash = 3}
 
 
 func _ready():

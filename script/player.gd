@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const MOTION_SPEED = 90.0
+const MOTION_SPEED = 100.0
 
 export var player_color = Color.white
 
@@ -39,12 +39,27 @@ func get_direction_from_input():
 
 
 func _input(event):
-	if event.is_action_pressed("ui_accept") \
-		and !dashing and dash_count > 0:
-		$dash_count.remove_count(1)
-		dash_count -= 1
-		dashing = true
-		dash_time = 0.2
+	if is_network_master():
+		if event.is_action_pressed("ui_accept") \
+			and !dashing and dash_count > 0 and dash_count != 0\
+			and get_direction_from_input() != Vector2.ZERO:
+			var c = get_tree().get_root().get_node("World/Score").player_labels[int(name)]
+			print(c)
+			$dash_count.remove_count(1)
+			dash_count -= 1
+			dashing = true
+			dash_time = 0.2
+
+
+
+func add_dash(n):
+	dash_count += n
+	#$dash_count.set_count(get_tree().get_root().get_node("World/Score").player_labels[int(name)].dash)
+	#print(get_tree().get_root().get_node("World/Score").player_labels[int(name)].dash)
+	#
+	$dash_count.add_count(n, dash_max)
+	pass
+
 
 func _physics_process(_delta):
 	var motion = Vector2()

@@ -6,6 +6,10 @@ var pick = false
 var to = null
 var by_who = null
 
+func _ready():
+	$Sprite.self_modulate = Color(1, 1, 1, 0.5)
+	$AnimationPlayer.play("shine")
+
 func _physics_process(_delta):
 	if move and position != to.position:
 		position += (to.position - position) / 10
@@ -17,6 +21,10 @@ func _on_potato_chip_body_entered(body):
 		move = false
 		#$"../../Score".rpc("increase_score", int(body.name))
 		#print("pick=",by_who)
+		if is_network_master():
+			body.add_dash(1)
+		else:
+			body.rpc("add_dash", 1)
 		queue_free()
 
 func _on_potato_chip_area_entered(area):
