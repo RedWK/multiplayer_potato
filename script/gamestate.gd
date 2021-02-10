@@ -155,20 +155,32 @@ func get_player_name():
 
 
 func begin_game():
-	assert(get_tree().is_network_server())
+	var world = load("res://scene/world.tscn").instance()
+	get_tree().get_root().add_child(world)
+
+	get_tree().get_root().get_node("Lobby").hide()
+
+	var player_scene = load("res://scene/player.tscn")
+
+	var spawn_pos = world.get_node("SpawnPoints/0").position
+	var player = player_scene.instance()
+	player.add_to_group("players")
+	world.get_node("Players").add_child(player)
+	player.position = spawn_pos
+	#assert(get_tree().is_network_server())
 
 	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
-	var spawn_points = {}
-	spawn_points[1] = 0 # Server in spawn point 0.
-	var spawn_point_idx = 1
-	for p in players:
-		spawn_points[p] = spawn_point_idx
-		spawn_point_idx += 1
+	#var spawn_points = {}
+	#spawn_points[1] = 0 # Server in spawn point 0.
+	#var spawn_point_idx = 1
+	#for p in players:
+	#	spawn_points[p] = spawn_point_idx
+	#	spawn_point_idx += 1
 	# Call to pre-start game with the spawn points.
-	for p in players:
-		rpc_id(p, "pre_start_game", spawn_points)
+	#for p in players:
+	#	rpc_id(p, "pre_start_game", spawn_points)
 
-	pre_start_game(spawn_points)
+	#pre_start_game(spawn_points)
 
 #func delete_children(node):
 #	for n in node.get_children():

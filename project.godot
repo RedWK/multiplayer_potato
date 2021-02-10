@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Multiplayer Potato"
+config/name="Potato"
 run/main_scene="res://scene/lobby.tscn"
 
 [autoload]

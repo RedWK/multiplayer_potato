@@ -21,10 +21,7 @@ func _on_potato_chip_body_entered(body):
 		move = false
 		#$"../../Score".rpc("increase_score", int(body.name))
 		#print("pick=",by_who)
-		if is_network_master():
-			body.add_dash(1)
-		else:
-			body.rpc("add_dash", 1)
+		body.add_dash(1)
 		queue_free()
 
 func _on_potato_chip_area_entered(area):

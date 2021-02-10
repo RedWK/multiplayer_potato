@@ -6,7 +6,7 @@ func _ready():
 	pre_item  = ""
 	gamestate.item_index = 0
 
-sync func setup_item(item_name, pos):
+func setup_item(item_name, pos):
 	if item_name != pre_item:
 		var item = preload("res://scene/add/potato_chip.tscn").instance()
 		item.set_name(item_name) # Ensure unique name for the item
@@ -24,6 +24,5 @@ func _on_Timer_timeout():
 
 	var item_name = "p" + str(gamestate.item_index)
 	var item_pos = position
-	rpc("setup_item", item_name, item_pos)#, get_tree().get_network_unique_id())
-		
+	setup_item(item_name, item_pos)
 	

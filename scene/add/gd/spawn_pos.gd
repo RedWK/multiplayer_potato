@@ -7,7 +7,7 @@ func _ready():
 	pre_potato = ""
 	gamestate.p_index = 0
 
-sync func setup_potato(potato_name, pos):
+func setup_potato(potato_name, pos):
 	if potato_name != pre_potato:
 		var potato = preload("res://scene/add/potato_spawn.tscn").instance()
 		potato.set_name(potato_name) # Ensure unique name for the potato
@@ -25,6 +25,6 @@ func _on_Timer_timeout():
 
 	var potato_name = "p" + str(gamestate.p_index)
 	var potato_pos = position
-	rpc("setup_potato", potato_name, potato_pos)#, get_tree().get_network_unique_id())
+	setup_potato(potato_name, potato_pos)#, get_tree().get_network_unique_id())
 		
 	
