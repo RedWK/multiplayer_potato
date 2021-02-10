@@ -26,11 +26,11 @@ func  _on_Potato_S_body_entered(body):
 	if body.is_in_group("players"):
 		$Sprite.set_self_modulate(Color( 0, 0, 0, 0 ))
 		potato_boom()
-		#print("aaa")
-	pass # Replace with function body.
 
 
 func _on_Tween_tween_all_completed():
 	queue_free()
-	pass # Replace with function body.
 
+
+func _on_killself_timeout():
+	queue_free()

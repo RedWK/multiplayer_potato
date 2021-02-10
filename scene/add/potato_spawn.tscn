@@ -20,5 +20,11 @@ region_rect = Rect2( 32, 32, 16, 16 )
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="killself" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
 [connection signal="body_entered" from="." to="." method="_on_Potato_S_body_entered"]
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="killself" to="." method="_on_killself_timeout"]

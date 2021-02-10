@@ -22,7 +22,13 @@ region_rect = Rect2( 16, 32, 16, 16 )
 wait_time = 0.8
 one_shot = true
 autostart = true
+
+[node name="killself" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
 [connection signal="area_entered" from="." to="." method="_on_potato_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_potato_area_exited"]
 [connection signal="body_entered" from="." to="." method="_on_potato_body_entered"]
 [connection signal="timeout" from="can_pick" to="." method="_on_can_pick_timeout"]
+[connection signal="timeout" from="killself" to="." method="_on_killself_timeout"]

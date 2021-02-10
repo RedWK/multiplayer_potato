@@ -33,3 +33,7 @@ func _on_potato_area_exited(area):
 func _on_can_pick_timeout():
 	$Sprite.self_modulate = Color(1, 1, 1, 0.65)
 	can_pick = true
+
+
+func _on_killself_timeout():
+	queue_free()
