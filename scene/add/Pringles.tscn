@@ -9,7 +9,7 @@ radius = 8.0
 height = 12.0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 16 )
+extents = Vector2( 7.9572, 10.9961 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 3 )
@@ -43,7 +43,7 @@ expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 anti_aliasing = false
 
-[node name="Neet" type="KinematicBody2D"]
+[node name="Pringles" type="KinematicBody2D"]
 z_index = 5
 z_as_relative = false
 script = ExtResource( 2 )
@@ -74,6 +74,7 @@ position = Vector2( -25.0011, -40.3428 )
 z_index = 11
 
 [node name="throw" type="ProgressBar" parent="Node2D"]
+self_modulate = Color( 1, 1, 1, 0.431373 )
 margin_right = 50.0
 margin_bottom = 18.0
 custom_styles/fg = SubResource( 4 )

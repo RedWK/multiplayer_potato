@@ -23,7 +23,7 @@ func setup_item(item_name, pos):
 		var item = potato_chip.instance()
 		item.set_name(item_name) # Ensure unique name for the item
 		item.position = pos
-		get_parent().get_node("Rocks").add_child(item)
+		get_parent().get_node("Rocks").call_deferred("add_child", item)#add_child(item)
 		pre_item = item_name
 		gamestate.item_index += 1
 

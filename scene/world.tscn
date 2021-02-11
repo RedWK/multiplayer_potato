@@ -1,22 +1,24 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scene/add/spawn_pos.tscn" type="PackedScene" id=2]
-[ext_resource path="res://script/score.gd" type="Script" id=3]
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=4]
 [ext_resource path="res://scene/add/spawn_item.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scene/add/Neet.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scene/add/enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/add/Pringles.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scene/add/gd/e_path.gd" type="Script" id=8]
 [ext_resource path="res://scene/add/gd/world.gd" type="Script" id=9]
 
-[sub_resource type="Curve2D" id=2]
+[sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -256, -160, 0, 0, 0, 0, 32, -160, 0, 0, 0, 0, 32, 32, 0, 0, 0, 0, -256, 32, 0, 0, 0, 0, -256, -160 )
 }
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 44
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
 font_data = ExtResource( 4 )
 
 [node name="World" type="Node2D"]
@@ -55,12 +57,12 @@ position = Vector2( 296, 24 )
 
 [node name="Enemy" type="Node2D" parent="."]
 
-[node name="Neet" parent="." instance=ExtResource( 6 )]
+[node name="Pringles" parent="." instance=ExtResource( 6 )]
 position = Vector2( 160, 88 )
 
 [node name="e_path" type="Path2D" parent="."]
 position = Vector2( 272, 176 )
-curve = SubResource( 2 )
+curve = SubResource( 1 )
 script = ExtResource( 8 )
 
 [node name="spawn_pos" type="PathFollow2D" parent="e_path"]
@@ -69,18 +71,6 @@ position = Vector2( -256, -160 )
 [node name="spawn_enemy" type="Timer" parent="e_path"]
 wait_time = 1.5
 autostart = true
-
-[node name="Score" type="HBoxContainer" parent="."]
-visible = false
-margin_top = 208.0
-margin_right = 320.0
-margin_bottom = 240.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Winner" type="Label" parent="."]
 visible = false
@@ -91,7 +81,7 @@ margin_bottom = 295.917
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
@@ -109,9 +99,6 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 160, 120 )
 current = true
-
-[node name="enemy" parent="." instance=ExtResource( 7 )]
-position = Vector2( 128, 128 )
 
 [node name="spawn_item" parent="." instance=ExtResource( 5 )]
 position = Vector2( 136, 104 )
@@ -132,16 +119,39 @@ position = Vector2( 48, 48 )
 position = Vector2( 272, 176 )
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 256, 224 )
 scale = Vector2( 0.25, 0.25 )
 z_index = 11
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="Node2D"]
+margin_left = 64.0
+margin_top = 864.0
+margin_right = 1216.0
+margin_bottom = 896.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="Node2D"]
+margin_left = 64.0
+margin_right = 1216.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 3 )
+text = "Score"
+align = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
 
 [node name="ExitGame" type="Button" parent="Node2D"]
 margin_right = 265.0
 margin_bottom = 61.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "EXIT GAME"
 __meta__ = {
 "_edit_use_anchors_": false

@@ -42,7 +42,7 @@ one_shot = true
 autostart = true
 
 [node name="killself" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 300.0
 one_shot = true
 autostart = true
 

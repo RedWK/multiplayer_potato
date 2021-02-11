@@ -12,11 +12,11 @@ func _physics_process(_delta):
 
 
 func _on_potato_body_entered(body):
-	if body.is_in_group("player") and can_pick:
+	if (body.is_in_group("player") or body.is_in_group("enemy")) and can_pick:
 		pick = true
 		move = false
-
 		queue_free()
+		
 
 func _on_potato_area_entered(area):
 	if area.name == "collect_range" and !pick and can_pick:

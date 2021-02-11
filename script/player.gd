@@ -134,6 +134,7 @@ func _ready():
 	$outline.get_material().set_shader_param("outline_color", player_color)
 	$dash_count.set_count(3)
 	$label.add_color_override("font_color", player_color)
+	$arrow.self_modulate = player_color
 	for c in $dash_count/counts.get_children():
 		c.self_modulate = player_color
 		pass
