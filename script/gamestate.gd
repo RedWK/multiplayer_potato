@@ -164,7 +164,7 @@ func begin_game():
 
 	var spawn_pos = world.get_node("SpawnPoints/0").position
 	var player = player_scene.instance()
-	player.add_to_group("players")
+	player.add_to_group("player")
 	world.get_node("Players").add_child(player)
 	player.position = spawn_pos
 	#assert(get_tree().is_network_server())

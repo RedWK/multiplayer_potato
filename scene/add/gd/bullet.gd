@@ -1,16 +1,24 @@
 extends Area2D
 var dir = Vector2.ZERO
-var mspeed = 25.5
+var mspeed = 200.5
 
+
+func _ready():
+	add_to_group("bullet")
 # Called when the node enters the scene tree for the first time.
 func ready_pos(pos, input):
 	dir = input	
 	position = pos
 
 func _physics_process(_delta):
-	position = position + dir * mspeed
+	position = position + dir * _delta * mspeed
 	pass 
 
 func _on_killself_timeout():
 	queue_free()
+
+
+func _on_bullet_area_entered(area):
+	#if area.name == "hitbox":
+	#	queue_free()
 	pass # Replace with function body.

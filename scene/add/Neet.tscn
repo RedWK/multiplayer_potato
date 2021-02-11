@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=1]
 [ext_resource path="res://scene/add/gd/Boss.gd" type="Script" id=2]
@@ -7,12 +7,15 @@
 [sub_resource type="CapsuleShape2D" id=1]
 height = 12.0
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 16 )
+
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 3 )
 shader_param/outline_width = 1.0
 shader_param/outline_color = Color( 1, 0, 0, 1 )
 
-[node name="Boss" type="KinematicBody2D"]
+[node name="Neet" type="KinematicBody2D"]
 z_index = 5
 script = ExtResource( 2 )
 
@@ -20,13 +23,19 @@ script = ExtResource( 2 )
 position = Vector2( 0, 8 )
 shape = SubResource( 1 )
 
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource( 2 )
+
 [node name="outline" type="Sprite" parent="."]
-material = SubResource( 2 )
+material = SubResource( 3 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 64, 64, 48, 48 )
+region_rect = Rect2( 128, 0, 32, 48 )
 
 [node name="Sprite" type="Sprite" parent="outline"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 64, 64, 48, 48 )
+region_rect = Rect2( 128, 0, 32, 48 )
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

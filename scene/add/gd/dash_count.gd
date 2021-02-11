@@ -20,7 +20,7 @@ func remove_count(num):
 		if i >= 0:
 			now_counts[i].queue_free()
 
-func add_count(add ,dashmax = 3):
+func add_count(add ,dashmax, color):
 	var now_counts = counts.get_child_count()
 	if (now_counts + add) > dashmax:
 		add = 0
@@ -28,5 +28,6 @@ func add_count(add ,dashmax = 3):
 		for i in add:
 			var c = count.instance()
 			counts.add_child(c)
+			c.self_modulate = color
 	pass
 	

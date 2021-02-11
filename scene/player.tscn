@@ -7,7 +7,7 @@
 [ext_resource path="res://script/outline.shader" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6.91374, 6.53276 )
+extents = Vector2( 9.01504, 8.35772 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "standing"
@@ -139,7 +139,6 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color( 1, 0.552941, 0.2, 1 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 14
@@ -154,8 +153,9 @@ shader_param/outline_color = Color( 1, 1, 1, 1 )
 radius = 32.0
 
 [node name="player" type="KinematicBody2D"]
-z_index = 2
+z_index = 11
 script = ExtResource( 2 )
+player_color = Color( 0.827451, 1, 0, 1 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -210,6 +210,11 @@ texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 16, 64, 16, 16 )
 
+[node name="arrow" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 32, 112, 48, 48 )
+
 [node name="sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 region_enabled = true
@@ -220,3 +225,5 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
 shape = SubResource( 11 )
+
+[node name="SE" type="AudioStreamPlayer" parent="."]

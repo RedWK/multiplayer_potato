@@ -23,7 +23,7 @@ sync func potato_boom():
 
 
 func  _on_Potato_S_body_entered(body):
-	if body.is_in_group("players"):
+	if body.is_in_group("player"):
 		$Sprite.set_self_modulate(Color( 0, 0, 0, 0 ))
 		potato_boom()
 
