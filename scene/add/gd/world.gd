@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -16,8 +16,5 @@ func _ready():
 #	pass
 
 
-func _on_hitbox_area_entered(area):
-	if area.is_in_group("bullet"):
-		area.queue_free()
-		print("hit")
-	pass # Replace with function body.
+func _on_ExitGame_pressed():
+	gamestate.end_game()

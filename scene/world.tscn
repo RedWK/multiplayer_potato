@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scene/add/spawn_pos.tscn" type="PackedScene" id=2]
@@ -7,12 +7,20 @@
 [ext_resource path="res://scene/add/spawn_item.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/add/Neet.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scene/add/enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/add/gd/e_path.gd" type="Script" id=8]
+[ext_resource path="res://scene/add/gd/world.gd" type="Script" id=9]
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -256, -160, 0, 0, 0, 0, 32, -160, 0, 0, 0, 0, 32, 32, 0, 0, 0, 0, -256, 32, 0, 0, 0, 0, -256, -160 )
+}
 
 [sub_resource type="DynamicFont" id=1]
 size = 44
 font_data = ExtResource( 4 )
 
 [node name="World" type="Node2D"]
+script = ExtResource( 9 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -45,10 +53,25 @@ position = Vector2( 296, 24 )
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Boss" parent="." instance=ExtResource( 6 )]
+[node name="Enemy" type="Node2D" parent="."]
+
+[node name="Neet" parent="." instance=ExtResource( 6 )]
 position = Vector2( 160, 88 )
 
+[node name="e_path" type="Path2D" parent="."]
+position = Vector2( 272, 176 )
+curve = SubResource( 2 )
+script = ExtResource( 8 )
+
+[node name="spawn_pos" type="PathFollow2D" parent="e_path"]
+position = Vector2( -256, -160 )
+
+[node name="spawn_enemy" type="Timer" parent="e_path"]
+wait_time = 1.5
+autostart = true
+
 [node name="Score" type="HBoxContainer" parent="."]
+visible = false
 margin_top = 208.0
 margin_right = 320.0
 margin_bottom = 240.0
@@ -91,10 +114,16 @@ current = true
 position = Vector2( 128, 128 )
 
 [node name="spawn_item" parent="." instance=ExtResource( 5 )]
-position = Vector2( -64, 40 )
+position = Vector2( 136, 104 )
 
 [node name="Potato_Spawn" parent="." instance=ExtResource( 2 )]
-position = Vector2( -64, 0 )
+position = Vector2( 192, 96 )
+
+[node name="limit_center_up" type="Position2D" parent="."]
+position = Vector2( 136, 72 )
+
+[node name="limit_center_down" type="Position2D" parent="."]
+position = Vector2( 184, 120 )
 
 [node name="limit_up" type="Position2D" parent="."]
 position = Vector2( 48, 48 )
@@ -117,4 +146,5 @@ text = "EXIT GAME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Node2D/ExitGame" to="Score" method="_on_exit_game_pressed"]
+[connection signal="timeout" from="e_path/spawn_enemy" to="e_path" method="_on_spawn_enemy_timeout"]
+[connection signal="pressed" from="Node2D/ExitGame" to="." method="_on_ExitGame_pressed"]

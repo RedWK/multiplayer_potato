@@ -133,6 +133,14 @@ tracks/0/keys = {
 "values": [ 0, 0, 0, 0 ]
 }
 
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 5 )
+shader_param/outline_width = 1.0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 32.0
+
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
 border_width_left = 1
@@ -143,14 +151,6 @@ border_width_bottom = 1
 [sub_resource type="DynamicFont" id=9]
 size = 14
 font_data = ExtResource( 1 )
-
-[sub_resource type="ShaderMaterial" id=10]
-shader = ExtResource( 5 )
-shader_param/outline_width = 1.0
-shader_param/outline_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="CircleShape2D" id=11]
-radius = 32.0
 
 [node name="player" type="KinematicBody2D"]
 z_index = 11
@@ -167,6 +167,29 @@ anims/walk_down = SubResource( 4 )
 anims/walk_left = SubResource( 5 )
 anims/walk_right = SubResource( 6 )
 anims/walk_up = SubResource( 7 )
+
+[node name="outline" type="Sprite" parent="."]
+material = SubResource( 10 )
+position = Vector2( -7.15256e-07, -7.15256e-07 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 16, 64, 16, 16 )
+
+[node name="arrow" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 32, 112, 48, 48 )
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 16, 64, 16, 16 )
+
+[node name="collect_range" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
+shape = SubResource( 11 )
 
 [node name="dash_count" type="Panel" parent="."]
 margin_right = 40.0
@@ -202,28 +225,5 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="outline" type="Sprite" parent="."]
-material = SubResource( 10 )
-position = Vector2( -7.15256e-07, -7.15256e-07 )
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 16, 64, 16, 16 )
-
-[node name="arrow" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 32, 112, 48, 48 )
-
-[node name="sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-region_enabled = true
-region_rect = Rect2( 16, 64, 16, 16 )
-
-[node name="collect_range" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
-shape = SubResource( 11 )
 
 [node name="SE" type="AudioStreamPlayer" parent="."]

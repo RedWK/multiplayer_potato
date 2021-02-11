@@ -6,13 +6,25 @@ var pick = false
 var to = null
 var by_who = null
 
+
+var throw_pos = Vector2.ZERO
+
 func _ready():
 	$Sprite.self_modulate = Color(1, 1, 1, 0.5)
 	$AnimationPlayer.play("shine")
+	throw_pos = $"../../spawn_item".position
+	#print(throw_pos)
 
+
+var t = 1
 func _physics_process(_delta):
+	if t >= 1: t-=0.1
+	if t <= 0 : t+=0.1
 	if move and position != to.position:
-		position += (to.position - position) / 10
+		position += ((to.position - position) * t) / 10
+	if position != throw_pos:
+		position += ((throw_pos - position) * t)  / 10
+	
 
 
 func _on_potato_chip_body_entered(body):

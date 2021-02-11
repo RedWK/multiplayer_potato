@@ -4,7 +4,13 @@ onready var counts = $counts
 onready var count = preload("res://scene/add/count.tscn")
 onready var timer = $Timer
 
+func delete_children(node):
+	for n in node.get_children():
+		node.remove_child(n)
+		n.queue_free()
+
 func set_count(dashmax):
+	delete_children(counts)
 	rect_size.x = dashmax * 3 + 3
 	rect_size.y = 6
 	rect_position.x = -( dashmax * 3 + 3) / 2

@@ -58,7 +58,8 @@ func shoot():
 	shoot_timer = shoot_timer_reset
 
 func add_dash(n):
-	dash_count += n
+	if dash_count < dash_max : dash_count += n
+	if dash_count > dash_max : dash_count = dash_max
 	$dash_count.add_count(n, dash_max, player_color)
 	pass
 

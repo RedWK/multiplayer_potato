@@ -1,5 +1,6 @@
 extends Node
 
+var Globalplayer = null
 var item_index = 0
 var p_index = 0
 var potato_index = 0
@@ -167,6 +168,7 @@ func begin_game():
 	player.add_to_group("player")
 	world.get_node("Players").add_child(player)
 	player.position = spawn_pos
+	Globalplayer = player
 	#assert(get_tree().is_network_server())
 
 	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.

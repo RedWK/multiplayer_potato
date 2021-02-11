@@ -20,9 +20,9 @@ func _on_Timer_timeout():
 	var limit_down = get_parent().get_node("limit_down")
 	var x = rand_range(limit_up.position.x, limit_down.position.x)
 	var y = rand_range(limit_up.position.y, limit_down.position.y)
-	position = Vector2(x, y)
+	position = Vector2(int(x), int(y))
 
-	var item_name = "p" + str(gamestate.item_index)
+	#var item_name = "p" + str(gamestate.item_index)
 	var item_pos = position
-	setup_item(item_name, item_pos)
+	#setup_item(item_name, item_pos)
 	

@@ -17,8 +17,7 @@ func _physics_process(_delta):
 func _on_killself_timeout():
 	queue_free()
 
-
-func _on_bullet_area_entered(area):
-	#if area.name == "hitbox":
-	#	queue_free()
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+	#print("del")
 	pass # Replace with function body.
