@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=1]
 [ext_resource path="res://scene/add/gd/Neet.gd" type="Script" id=2]
@@ -11,12 +11,15 @@ height = 12.0
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 7.9572, 10.9961 )
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="CircleShape2D" id=3]
+radius = 48.0
+
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 3 )
 shader_param/outline_width = 1.0
 shader_param/outline_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 3.0
 content_margin_right = 3.0
 content_margin_top = 3.0
@@ -27,7 +30,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.286275, 0.254902, 0.509804, 0 )
 border_width_left = 2
 border_width_top = 2
@@ -56,8 +59,14 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource( 2 )
 
+[node name="collect_range" type="Area2D" parent="."]
+position = Vector2( 0, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
+shape = SubResource( 3 )
+
 [node name="outline" type="Sprite" parent="."]
-material = SubResource( 3 )
+material = SubResource( 4 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 128, 0, 32, 48 )
@@ -66,6 +75,10 @@ region_rect = Rect2( 128, 0, 32, 48 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 128, 0, 32, 48 )
+
+[node name="collect" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
 
 [node name="throw_chip" type="Timer" parent="."]
 
@@ -77,11 +90,12 @@ z_index = 11
 self_modulate = Color( 1, 1, 1, 0.431373 )
 margin_right = 50.0
 margin_bottom = 18.0
-custom_styles/fg = SubResource( 4 )
-custom_styles/bg = SubResource( 5 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="collect" to="." method="_on_collect_timeout"]
 [connection signal="timeout" from="throw_chip" to="." method="_on_throw_chip_timeout"]
 [connection signal="value_changed" from="Node2D/throw" to="." method="_on_throw_value_changed"]

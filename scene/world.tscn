@@ -37,7 +37,7 @@ __meta__ = {
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Position2D" parent="SpawnPoints"]
-position = Vector2( 160, 200 )
+position = Vector2( 160, 144 )
 
 [node name="1" type="Position2D" parent="SpawnPoints"]
 visible = false
@@ -125,11 +125,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ProgressBar" type="ProgressBar" parent="Node2D"]
+[node name="potato_ammo" type="ProgressBar" parent="Node2D"]
 margin_left = 64.0
 margin_top = 864.0
 margin_right = 1216.0
-margin_bottom = 896.0
+margin_bottom = 928.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

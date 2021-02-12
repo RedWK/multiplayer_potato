@@ -37,13 +37,17 @@ func _on_potato_chip_body_entered(body):
 		queue_free()
 
 func _on_potato_chip_area_entered(area):
-	if area.name == "collect_range" and !pick and can_pick:
+	if area.name == "collect_range" \
+		and area.get_parent().is_in_group("player")\
+		and !pick and can_pick:
 		to = area.get_parent()
 		#by_who = int(to.name)
 		move = true
 
 func _on_potato_chip_area_exited(area):
-	if area.name == "collect_range" and !pick and can_pick:
+	if area.name == "collect_range" \
+		and area.get_parent().is_in_group("player")\
+		and !pick and can_pick:
 		to = null
 		move = false
 

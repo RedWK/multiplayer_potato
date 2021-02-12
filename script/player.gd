@@ -40,6 +40,8 @@ func _input(event):
 	if event.is_action_pressed("dash") \
 		and !dashing and dash_count > 0 and dash_count != 0\
 		and get_direction_from_input() != Vector2.ZERO:
+		$Push/collision.disabled = false
+		$push_rest.start(.5)
 		$dash_count.remove_count(1)
 		dash_count -= 1
 		dashing = true
@@ -139,3 +141,7 @@ func _ready():
 		c.self_modulate = player_color
 		pass
 #	puppet_pos = position
+
+
+func _on_push_rest_timeout():
+	$Push/collision.disabled = true

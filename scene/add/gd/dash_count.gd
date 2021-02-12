@@ -2,7 +2,7 @@ extends Panel
 
 onready var counts = $counts
 onready var count = preload("res://scene/add/count.tscn")
-onready var timer = $Timer
+#onready var timer = $Timer
 
 func delete_children(node):
 	for n in node.get_children():
