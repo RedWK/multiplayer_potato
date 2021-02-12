@@ -40,8 +40,9 @@ func _input(event):
 	if event.is_action_pressed("dash") \
 		and !dashing and dash_count > 0 and dash_count != 0\
 		and get_direction_from_input() != Vector2.ZERO:
+		$push_range.monitorable = true
 		$Push/collision.disabled = false
-		$push_rest.start(.5)
+		$push_rest.start(.35)
 		$dash_count.remove_count(1)
 		dash_count -= 1
 		dashing = true
@@ -49,15 +50,20 @@ func _input(event):
 		pass
 
 func shoot():
-	se.play()
-	var bullet = load("res://scene/add/bullet.tscn").instance()
-	var input_dir = get_direction_from_input()
-	var shoot_dir = dir
-	if input_dir != Vector2.ZERO:
-		shoot_dir = input_dir
-	get_parent().add_child(bullet)
-	bullet.ready_pos(position,  shoot_dir)
-	shoot_timer = shoot_timer_reset
+	if gamestate.potato_ammo > 0:
+		gamestate.potato_ammo -= 1
+		se.play()
+		var bullet = load("res://scene/add/bullet.tscn").instance()
+		var input_dir = get_direction_from_input()
+		var shoot_dir = dir
+		if input_dir != Vector2.ZERO:
+			shoot_dir = input_dir
+		get_parent().add_child(bullet)
+		bullet.ready_pos(position,  shoot_dir)
+		shoot_timer = shoot_timer_reset
+	else:
+		pass
+
 
 func add_dash(n):
 	if dash_count < dash_max : dash_count += n
@@ -139,9 +145,8 @@ func _ready():
 	$arrow.self_modulate = player_color
 	for c in $dash_count/counts.get_children():
 		c.self_modulate = player_color
-		pass
-#	puppet_pos = position
 
 
 func _on_push_rest_timeout():
 	$Push/collision.disabled = true
+	$push_range.monitorable = false

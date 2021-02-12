@@ -9,3 +9,7 @@ func add_score(n):
 
 func _on_ExitGame_pressed():
 	gamestate.end_game()
+
+func _physics_process(delta):
+	$Node2D/potato_ammo.value = gamestate.potato_ammo
+	pass

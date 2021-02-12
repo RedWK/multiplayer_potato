@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/player.gd" type="Script" id=2]
@@ -7,12 +7,15 @@
 [ext_resource path="res://script/outline.shader" type="Shader" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 24.0
+radius = 32.0
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=14]
+radius = 48.0
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 9.01504, 8.35772 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -28,7 +31,7 @@ tracks/0/keys = {
 "values": [ 0, 0, 0, 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 1.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("outline:frame")
@@ -67,26 +70,9 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=5]
-length = 0.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("outline:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( -0.1, 0, 0.2, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 0, 0, 0 ]
-}
-
 [sub_resource type="Animation" id=6]
 length = 0.8
 loop = true
-step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("outline:frame")
 tracks/0/interp = 1
@@ -134,22 +120,39 @@ tracks/0/keys = {
 "values": [ 0, 0, 0, 0 ]
 }
 
-[sub_resource type="ShaderMaterial" id=9]
+[sub_resource type="Animation" id=9]
+length = 0.8
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("outline:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.1, 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 0, 0 ]
+}
+
+[sub_resource type="ShaderMaterial" id=10]
 shader = ExtResource( 5 )
 shader_param/outline_width = 1.0
 shader_param/outline_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=11]
 radius = 32.0
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0, 0, 0, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=13]
 size = 14
 font_data = ExtResource( 1 )
 
@@ -163,23 +166,28 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="collision" type="CollisionShape2D" parent="Push"]
-position = Vector2( 1, 0 )
 shape = SubResource( 1 )
 disabled = true
 
+[node name="push_range" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="push_range"]
+shape = SubResource( 14 )
+
 [node name="shape" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
-anims/standing = SubResource( 3 )
-anims/stunned = SubResource( 4 )
-anims/walk_down = SubResource( 5 )
-anims/walk_left = SubResource( 6 )
-anims/walk_right = SubResource( 7 )
-anims/walk_up = SubResource( 8 )
+anims/standing = SubResource( 4 )
+anims/stunned = SubResource( 5 )
+anims/walk_down = SubResource( 6 )
+anims/walk_left = SubResource( 7 )
+anims/walk_right = SubResource( 8 )
+anims/walk_up = SubResource( 9 )
 
 [node name="outline" type="Sprite" parent="."]
-material = SubResource( 9 )
+material = SubResource( 10 )
 position = Vector2( -7.15256e-07, -7.15256e-07 )
 texture = ExtResource( 3 )
 region_enabled = true
@@ -199,7 +207,7 @@ region_rect = Rect2( 16, 64, 16, 16 )
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="push_rest" type="Timer" parent="."]
 wait_time = 0.6
@@ -208,7 +216,7 @@ one_shot = true
 [node name="dash_count" type="Panel" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 12 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -232,7 +240,7 @@ margin_bottom = 0.750002
 rect_scale = Vector2( 0.45, 0.45 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Player"
 align = 1

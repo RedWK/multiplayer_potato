@@ -17,6 +17,10 @@ func _on_potato_body_entered(body):
 		pick = true
 		move = false
 		if body.is_in_group("player"):
+			gamestate.potato_ammo += 2.5
+			if gamestate.potato_ammo > 100:
+				gamestate.potato_ammo = 100
+			#print(gamestate.potato_ammo)
 			pass
 			#print("player")
 		elif body.is_in_group("Pringles"):
@@ -31,7 +35,6 @@ func _on_potato_body_entered(body):
 func _on_potato_area_entered(area):
 	if area.name == "collect_range" and !pick and can_pick:
 		to = area.get_parent()
-
 		move = true
 
 func _on_potato_area_exited(area):
