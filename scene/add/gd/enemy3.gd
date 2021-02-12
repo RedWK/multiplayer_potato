@@ -1,7 +1,6 @@
 extends KinematicBody2D
 
-
-var enemy_id = 1
+var enemy_id = 3
 
 var maxhp = 3
 var hp = maxhp
@@ -12,10 +11,13 @@ var hit = false
 
 var can_fus = true
 var fusion = false
-var fus = preload("res://scene/add/enemy2.tscn")
+#var fus = preload("res://scene/add/enemy3.tscn")
+
+
 
 func _ready():
 	add_to_group("enemy")
+
 
 func _physics_process(_delta):
 	if hit:
@@ -51,10 +53,11 @@ func _on_hitbox_area_entered(area):
 
 # 合併
 func fusion(other):
-	var bigger = fus.instance()
-	get_parent().call_deferred("add_child", bigger)
-	var pos = (position + other.position) / 2
-	bigger.position = pos
+	return
+#	var bigger = fus.instance()
+#	get_parent().call_deferred("add_child", bigger)
+#	var pos = (position + other.position) / 2
+#	bigger.position = pos
 	other.queue_free()
 	queue_free()
 
@@ -65,10 +68,8 @@ func _on_fus_range_body_entered(body):
 		and body != self and body.can_fus == true:
 		body.can_fus = false
 		can_fus = false
-		fusion(body)
+		#fusion(body)
 
 
 func _on_re_timeout():
 	hit = false
-
-
