@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scene/add/gd/enemy.gd" type="Script" id=1]
 [ext_resource path="res://Img/tilemap1.png" type="Texture" id=2]
+[ext_resource path="res://scene/add/enemy_outline.tres" type="Material" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -12,9 +13,37 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id=3]
 
 [sub_resource type="Animation" id=4]
+resource_name = "fus"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/path = NodePath("outline:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.0941176, 0.0941176, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("outline/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("outline:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -42,17 +71,28 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fus_range"]
 shape = SubResource( 3 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="outline" type="Sprite" parent="."]
+material = ExtResource( 3 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 16, 96, 16, 16 )
+
+[node name="Sprite" type="Sprite" parent="outline"]
+texture = ExtResource( 2 )
+hframes = 2
+region_enabled = true
+region_rect = Rect2( 16, 96, 32, 16 )
 
 [node name="re" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
 
+[node name="Timer" type="Timer" parent="."]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hit = SubResource( 4 )
+anims/fus = SubResource( 4 )
+anims/hit = SubResource( 5 )
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="fus_range" to="." method="_on_fus_range_body_entered"]
 [connection signal="timeout" from="re" to="." method="_on_re_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

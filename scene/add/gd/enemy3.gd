@@ -27,10 +27,13 @@ func _physics_process(_delta):
 	else:
 		vel = position.direction_to(gamestate.Globalplayer.position) * move_speed
 	if !hit:
-		if vel.x < 0 and $Sprite.flip_h == true:
-			$Sprite.flip_h = false
-		elif vel.x > 0 and !$Sprite.flip_h:
-			$Sprite.flip_h = true
+		if vel.x < 0 and $outline.flip_h == true:
+			$outline.flip_h = false
+			$outline/Sprite.flip_h = false
+		elif vel.x > 0 and !$outline.flip_h:
+			$outline.flip_h = true
+			$outline/Sprite.flip_h = true
+			$outline/Sprite.flip_h = true
 	move_and_slide(vel)
 
 
@@ -53,23 +56,33 @@ func _on_hitbox_area_entered(area):
 
 # 合併
 func fusion(other):
-	return
-#	var bigger = fus.instance()
-#	get_parent().call_deferred("add_child", bigger)
-#	var pos = (position + other.position) / 2
-#	bigger.position = pos
-	other.queue_free()
-	queue_free()
-
+	if !can_fus:
+		#var bigger = fus.instance()
+		#get_parent().call_deferred("add_child", bigger)
+		#var pos = (position + other.position) / 2
+		#bigger.position = pos
+		#other.queue_free()
+		#queue_free()
+		pass
+	else:
+		other.can_fus = true
+		
 # 合併條件
 func _on_fus_range_body_entered(body):
 	if body.is_in_group("enemy") and can_fus \
-		and enemy_id == body.enemy_id \
+		and enemy_id == body.enemy_id and !hit and !body.hit\
 		and body != self and body.can_fus == true:
 		body.can_fus = false
 		can_fus = false
 		#fusion(body)
+		body.reset()
+		reset()
 
 
 func _on_re_timeout():
 	hit = false
+	can_fus = true
+
+
+func reset():
+	$re.start(.6)
