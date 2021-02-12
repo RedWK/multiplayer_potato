@@ -18,7 +18,6 @@ var fusion = false
 func _ready():
 	add_to_group("enemy")
 
-
 func _physics_process(_delta):
 	if hit:
 		vel = lerp(vel, Vector2.ZERO, 0.3)
@@ -33,7 +32,6 @@ func _physics_process(_delta):
 		elif vel.x > 0 and !$outline.flip_h:
 			$outline.flip_h = true
 			$outline/Sprite.flip_h = true
-			$outline/Sprite.flip_h = true
 	move_and_slide(vel)
 
 
@@ -46,27 +44,36 @@ func _on_hitbox_area_entered(area):
 		$re.start(.6)
 		# delete bullet
 		area.queue_free()
-		#-------
-		# dead
-		#-------
-		if hp <= 0 :
-			$"../..".add_score(1)
-			queue_free()
-		#print("hit")
+	if area.name == "push_range":
+		hp -= 2
+		var dir = (position - gamestate.Globalplayer.position).normalized()
+		vel = dir * knockback
+		hit = true
+		$AnimationPlayer.play("hit")
+		$re.start(.6)
+		#print("push")
+	#-------
+	# dead
+	#-------
+	if hp <= 0 :
+		$"../..".add_score(1)
+		queue_free()
+	#print("hit")
+
 
 # 合併
 func fusion(other):
-	if !can_fus:
-		#var bigger = fus.instance()
-		#get_parent().call_deferred("add_child", bigger)
-		#var pos = (position + other.position) / 2
-		#bigger.position = pos
-		#other.queue_free()
-		#queue_free()
-		pass
-	else:
-		other.can_fus = true
-		
+	#if !can_fus:
+	#	var bigger = fus.instance()
+	#	get_parent().call_deferred("add_child", bigger)
+	#	var pos = (position + other.position) / 2
+	#	bigger.position = pos
+	#	other.queue_free()
+	#	queue_free()
+	#else:
+	#	other.can_fus = true
+	pass
+
 # 合併條件
 func _on_fus_range_body_entered(body):
 	if body.is_in_group("enemy") and can_fus \
@@ -74,7 +81,7 @@ func _on_fus_range_body_entered(body):
 		and body != self and body.can_fus == true:
 		body.can_fus = false
 		can_fus = false
-		#fusion(body)
+		fusion(body)
 		body.reset()
 		reset()
 

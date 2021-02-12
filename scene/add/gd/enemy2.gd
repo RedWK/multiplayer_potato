@@ -18,7 +18,6 @@ var fus = preload("res://scene/add/enemy3.tscn")
 func _ready():
 	add_to_group("enemy")
 
-
 func _physics_process(_delta):
 	if hit:
 		vel = lerp(vel, Vector2.ZERO, 0.3)
@@ -45,13 +44,22 @@ func _on_hitbox_area_entered(area):
 		$re.start(.6)
 		# delete bullet
 		area.queue_free()
-		#-------
-		# dead
-		#-------
-		if hp <= 0 :
-			$"../..".add_score(1)
-			queue_free()
-		#print("hit")
+	if area.name == "push_range":
+		hp -= 2
+		var dir = (position - gamestate.Globalplayer.position).normalized()
+		vel = dir * knockback
+		hit = true
+		$AnimationPlayer.play("hit")
+		$re.start(.6)
+		#print("push")
+	#-------
+	# dead
+	#-------
+	if hp <= 0 :
+		$"../..".add_score(1)
+		queue_free()
+	#print("hit")
+
 
 # 合併
 func fusion(other):
@@ -80,6 +88,7 @@ func _on_fus_range_body_entered(body):
 func _on_re_timeout():
 	hit = false
 	can_fus = true
+
 
 func reset():
 	$re.start(.6)
