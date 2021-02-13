@@ -23,6 +23,6 @@ func _on_Timer_timeout():
 	position = Vector2(int(x), int(y))
 
 	#var item_name = "p" + str(gamestate.item_index)
-	var item_pos = position
+	#var item_pos = position
 	#setup_item(item_name, item_pos)
 	

@@ -23,16 +23,15 @@ func _physics_process(_delta):
 	if move and position != to.position:
 		position += ((to.position - position) * t) / 10
 	if position != throw_pos:
-		position += ((throw_pos - position) * t)  / 10
-	
+		position += ((throw_pos - position) * t)  / 10	
 
 
 func _on_potato_chip_body_entered(body):
-	if body.is_in_group("player") and can_pick:
+	if body.is_in_group("player") and can_pick\
+		and body.dash_count < body.dash_max:
+		#body.can_pick_chip = false
 		pick = true
 		move = false
-		#$"../../Score".rpc("increase_score", int(body.name))
-		#print("pick=",by_who)
 		body.add_dash(1)
 		queue_free()
 
@@ -41,7 +40,6 @@ func _on_potato_chip_area_entered(area):
 		and area.get_parent().is_in_group("player")\
 		and !pick and can_pick:
 		to = area.get_parent()
-		#by_who = int(to.name)
 		move = true
 
 func _on_potato_chip_area_exited(area):

@@ -1,12 +1,12 @@
 extends KinematicBody2D
 
 var potato_chip = preload("res://scene/add/potato_chip.tscn")
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 var pre_item = ""
 
-var throw_item_bar_max = 10
+
+var dir = Vector2.DOWN
+var throw_item_bar_max = 5
 var throw_item_bar = 0
 
 var collect_timer = 0.5
@@ -14,6 +14,7 @@ var collect_timer = 0.5
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("Pringles")
+	gamestate.Globalpringles = self
 	$Node2D/throw.max_value = throw_item_bar_max
 	pass
 

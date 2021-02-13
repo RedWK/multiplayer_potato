@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://montserrat.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/player.gd" type="Script" id=2]
@@ -9,11 +9,40 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=2]
 radius = 48.0
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 9.01504, 8.35772 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "shooting"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("outline:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 2, 0.5, 2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( -2, 0.5, 2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 length = 0.8
@@ -143,7 +172,7 @@ shader_param/outline_width = 1.0
 shader_param/outline_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 32.0
+radius = 40.0
 
 [sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0, 0, 0, 1 )
@@ -173,12 +202,13 @@ disabled = true
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="push_range"]
-shape = SubResource( 14 )
+shape = SubResource( 2 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
+anims/shooting = SubResource( 14 )
 anims/standing = SubResource( 4 )
 anims/stunned = SubResource( 5 )
 anims/walk_down = SubResource( 6 )
@@ -199,12 +229,12 @@ region_enabled = true
 region_rect = Rect2( 32, 112, 48, 48 )
 
 [node name="sprite" type="Sprite" parent="."]
+position = Vector2( 0, 0.25 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 16, 64, 16, 16 )
 
 [node name="collect_range" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collect_range"]
 shape = SubResource( 11 )
@@ -212,6 +242,10 @@ shape = SubResource( 11 )
 [node name="push_rest" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true
+
+[node name="collect" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
 
 [node name="dash_count" type="Panel" parent="."]
 margin_right = 40.0
@@ -250,3 +284,4 @@ __meta__ = {
 
 [node name="SE" type="AudioStreamPlayer" parent="."]
 [connection signal="timeout" from="push_rest" to="." method="_on_push_rest_timeout"]
+[connection signal="timeout" from="collect" to="." method="_on_collect_timeout"]

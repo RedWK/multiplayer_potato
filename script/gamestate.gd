@@ -1,7 +1,7 @@
 extends Node
 
 var Globalplayer = null
-
+var Globalpringles = null
 
 var score = 0
 
@@ -14,6 +14,12 @@ var potato_index = 0
 
 # Signals to let lobby GUI know what's going on.
 signal game_ended()
+
+
+
+func _ready():
+	Engine.time_scale = 1
+	pass
 
 func begin_game():
 	var world = load("res://scene/world.tscn").instance()
@@ -55,6 +61,17 @@ func end_game():
 	#p_index = 0
 	#potato_index = 0
 
+func _quadratic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, t: float):
+	var q0 = p0.linear_interpolate(p1, t)
+	var q1 = p1.linear_interpolate(p2, t)
+	var r = q0.linear_interpolate(q1, t)
+	return r
 
-func _ready():
-	pass
+func _cubic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float):
+	var q0 = p0.linear_interpolate(p1, t)
+	var q1 = p1.linear_interpolate(p2, t)
+	var q2 = p2.linear_interpolate(p3, t)
+	var r0 = q0.linear_interpolate(q1, t)
+	var r1 = q1.linear_interpolate(q2, t)
+	var s = r0.linear_interpolate(r1, t)
+	return s

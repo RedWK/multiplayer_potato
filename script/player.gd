@@ -19,7 +19,7 @@ var shoot_timer_reset = 0.15
 var shoot_timer = shoot_timer_reset
 
 
-
+#var can_pick_chip = true
 
 var current_anim = ""
 
@@ -42,8 +42,8 @@ func _input(event):
 		and get_direction_from_input() != Vector2.ZERO:
 		$push_range.monitorable = true
 		$Push/collision.disabled = false
-		$push_rest.start(.35)
-		$dash_count.remove_count(1)
+		$push_rest.start(.25)
+		#$dash_count.remove_count(1)
 		dash_count -= 1
 		dashing = true
 		dash_time = 0.2
@@ -61,6 +61,7 @@ func shoot():
 		get_parent().add_child(bullet)
 		bullet.ready_pos(position,  shoot_dir)
 		shoot_timer = shoot_timer_reset
+		$anim.play("shooting")
 	else:
 		pass
 
@@ -68,8 +69,8 @@ func shoot():
 func add_dash(n):
 	if dash_count < dash_max : dash_count += n
 	if dash_count > dash_max : dash_count = dash_max
-	$dash_count.add_count(n, dash_max, player_color)
-	pass
+	#$dash_count.add_count(n, dash_max, player_color)
+
 
 #var arrow_dir = Vector2.ZERO
 
@@ -125,9 +126,9 @@ func _physics_process(_delta):
 	$arrow.rotation = -dir_angle
 	#print(dir_angle,"rotation=",$arrow.rotation)
 
-	if new_anim != current_anim:
-		current_anim = new_anim
-		get_node("anim").play(current_anim)
+	#if new_anim != current_anim:
+		#current_anim = new_anim
+		#$anim.play(current_anim)
 
 	if dashing:
 		var dash = get_direction_from_input()
@@ -150,3 +151,10 @@ func _ready():
 func _on_push_rest_timeout():
 	$Push/collision.disabled = true
 	$push_range.monitorable = false
+
+
+func _on_collect_timeout():
+	if !$collect_range.monitoring:
+		$collect_range.monitoring = true
+	else:
+		$collect_range.monitoring = false
