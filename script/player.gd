@@ -50,20 +50,21 @@ func _input(event):
 		pass
 
 func shoot():
+	var input_dir = get_direction_from_input()
+	var shoot_dir = dir
+	var bullet = load("res://scene/add/bullet.tscn").instance()
+	if input_dir != Vector2.ZERO:
+		shoot_dir = input_dir
+	get_parent().add_child(bullet)
+	bullet.ready_pos(position,  shoot_dir)
 	if gamestate.potato_ammo > 0:
 		gamestate.potato_ammo -= 1
 		se.play()
-		var bullet = load("res://scene/add/bullet.tscn").instance()
-		var input_dir = get_direction_from_input()
-		var shoot_dir = dir
-		if input_dir != Vector2.ZERO:
-			shoot_dir = input_dir
-		get_parent().add_child(bullet)
-		bullet.ready_pos(position,  shoot_dir)
-		shoot_timer = shoot_timer_reset
-		$anim.play("shooting")
 	else:
-		pass
+		bullet.can_kill = false
+		bullet.get_node("Sprite").region_rect = Rect2(16, 128, 16, 16)
+	shoot_timer = shoot_timer_reset
+	$anim.play("shooting")
 
 
 func add_dash(n):
@@ -71,6 +72,12 @@ func add_dash(n):
 	if dash_count > dash_max : dash_count = dash_max
 	#$dash_count.add_count(n, dash_max, player_color)
 
+
+#func check_collision():
+#	var collision
+#	for index in get_slide_count():
+#		collision = get_slide_collision(index)
+#		return collision
 
 #var arrow_dir = Vector2.ZERO
 
@@ -129,12 +136,14 @@ func _physics_process(_delta):
 	#if new_anim != current_anim:
 		#current_anim = new_anim
 		#$anim.play(current_anim)
-
+	#if check_collision() != null and check_collision().collider.is_in_group("enemy"):
+		
+	#	print(check_collision().collider.name)
 	if dashing:
 		var dash = get_direction_from_input()
-		move_and_slide(dash * dash_speed)
+		move_and_slide(dash * dash_speed, Vector2.UP, false, 4, PI/4, false)
 	else:
-		move_and_slide(motion * MOTION_SPEED)
+		move_and_slide(motion * MOTION_SPEED, Vector2.UP, false, 4, PI/4, false)
 
 
 

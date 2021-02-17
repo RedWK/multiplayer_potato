@@ -11,6 +11,7 @@ func ready_pos(pos, input):
 	position = pos
 
 func _physics_process(_delta):
+	if !can_kill : $Push/CollisionShape2D.disabled = false
 	position = position + dir * _delta * mspeed
 	pass 
 

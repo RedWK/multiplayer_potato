@@ -37,7 +37,8 @@ func _physics_process(_delta):
 
 func _on_hitbox_area_entered(area):
 	if area.is_in_group("bullet"):
-		hp -= 1
+		if area.can_kill:
+			hp -= 1
 		vel = area.dir * knockback
 		hit = true
 		$AnimationPlayer.play("hit")
