@@ -69,12 +69,12 @@ shape = SubResource( 3 )
 material = SubResource( 4 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 128, 0, 32, 48 )
+region_rect = Rect2( 80, 0, 32, 32 )
 
 [node name="Sprite" type="Sprite" parent="outline"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 128, 0, 32, 48 )
+region_rect = Rect2( 80, 0, 32, 32 )
 
 [node name="collect" type="Timer" parent="."]
 wait_time = 0.5
